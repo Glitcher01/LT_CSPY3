@@ -1,4 +1,5 @@
 import turtle
+import sys
 wn = turtle.Screen()
 tess = turtle.Turtle()
 wn.title("Handling keypresses!")
@@ -7,6 +8,18 @@ pen_size = 1
 speed = 6
 tess.pensize(pen_size)
 tess.speed(speed)
+
+def test(did_pass):
+    linenum = sys._getframe(1).f_lineno
+    if did_pass:
+        msg = "Test at line {0} ok.".format(linenum)
+    else:
+        msg = "Test at line {0} FAILED.".format(linenum)
+    print(msg)
+
+
+def test_suite():
+    """test stuff in here"""
 
 def move_forward():
     tess.fd(30)

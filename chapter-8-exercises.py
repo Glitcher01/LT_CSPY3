@@ -13,7 +13,7 @@ def test(did_pass):
 
 
 def test_suite():
-    test(func_813("an", "banana") == "ba")
+    """test stuff in here"""
 
 
 def find(string, char, index=0, end=None):

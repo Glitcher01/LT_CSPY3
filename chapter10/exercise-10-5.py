@@ -1,11 +1,25 @@
 import turtle
-
+import sys
 wn = turtle.Screen()
 wn.title("Tess becomes a traffic light!")
 wn.bgcolor("lightgreen")
 tess = turtle.Turtle()
 alex = turtle.Turtle()
 jess = turtle.Turtle()
+
+
+def test(did_pass):
+    linenum = sys._getframe(1).f_lineno
+    if did_pass:
+        msg = "Test at line {0} ok.".format(linenum)
+    else:
+        msg = "Test at line {0} FAILED.".format(linenum)
+    print(msg)
+
+
+def test_suite():
+    """test stuff in here"""
+
 
 def draw_housing():
     tess.pensize(3)
