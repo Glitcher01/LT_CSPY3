@@ -93,4 +93,5 @@ def advance_state_machine():
         wn.ontimer(advance_state_machine, 2000)
 
 advance_state_machine()
+test_suite()
 wn.mainloop()
