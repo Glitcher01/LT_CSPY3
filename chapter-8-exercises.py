@@ -78,7 +78,7 @@ def func_86(number):
         #print(layout.format(*new_list))
         for i in range(1, number + 1):
             for j in range(1, number + 1):
-                print(i * j, end = "\t");
+                print(i * j, end = "\t")
             print()
 
 
@@ -139,4 +139,4 @@ def func_813(substring, word):
     # return new_word
     return word.replace(substring, "")
 
-func_86(12)
+test_suite()
