@@ -82,6 +82,6 @@ def swap(a, b):
     print("after swap statement: x:", a, "y:", b)
 
 
-swap([1, 2, 3], [2, 4, 6])
+swap([1, 2, 3], [3, 4, 6])
 test_suite()
 turtle.mainloop()
