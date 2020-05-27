@@ -1,8 +1,9 @@
 import turtle
 import sys
+
 wn = turtle.Screen()
 wn.title("Tess becomes a traffic light!")
-wn.bgcolor("lightgreen")
+wn.bgcolor('lightgreen')
 tess = turtle.Turtle()
 alex = turtle.Turtle()
 jess = turtle.Turtle()
@@ -32,6 +33,7 @@ def draw_housing():
     tess.forward(200)
     tess.left(90)
     tess.end_fill()
+
 
 draw_housing()
 
@@ -63,12 +65,13 @@ wn.colormode(255)
 
 state_num = 0
 
+
 def advance_state_machine():
     global state_num
     if state_num == 0:  # Transition from state 0 to state 1
-        tess.fillcolor(0, 255, 0)
-        jess.fillcolor(105, 0, 0)
-        alex.fillcolor(173, 104, 0)
+        tess.fillcolor(0, 255, 0) #green
+        jess.fillcolor(105, 0, 0) #red
+        alex.fillcolor(173, 104, 0) #orange
         state_num = 1
     elif state_num == 1:
         tess.fillcolor(0, 255, 0)
@@ -85,12 +88,10 @@ def advance_state_machine():
         jess.fillcolor("red")
         tess.fillcolor(0, 105, 0)
         state_num = 0
-    if (state_num == 2 or state_num == 3):
-        wn.ontimer(advance_state_machine, 1000)
-    elif (state_num == 1):
-        wn.ontimer(advance_state_machine, 3000)
-    else:
-        wn.ontimer(advance_state_machine, 2000)
+
+    if state_num == 2 or state_num == 3: wn.ontimer(advance_state_machine, 1000)
+    elif state_num == 1: wn.ontimer(advance_state_machine, 3000)
+    else: wn.ontimer(advance_state_machine, 2000)
 
 advance_state_machine()
 test_suite()
