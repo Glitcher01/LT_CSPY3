@@ -39,3 +39,5 @@ def func12_4():
     print(mymodule1.myage - mymodule2.myage ==
           mymodule2.year - mymodule1.myage)
     print("My name is ", __name__)
+
+test(1 == 1)
