@@ -2,6 +2,8 @@ import sys
 from unit_tester import test
 import calendar
 import math
+import mymodule1
+import mymodule2
 
 
 def func12_1a():
@@ -31,4 +33,9 @@ def func12_1d(weekday=0, language='English', year=0):
 # math.pi = 3.141592653589793
 # math.e = 2.718281828459045
 # math.tau = 6.283185307179586
-# deep copy creates a copy of the object and the elements inside that object
+# deep copy creates a copy of the object and the elements inside that
+
+def func12_4():
+    print(mymodule1.myage - mymodule2.myage ==
+          mymodule2.year - mymodule1.myage)
+    print("My name is ", __name__)
