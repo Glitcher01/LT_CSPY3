@@ -40,4 +40,3 @@ def func12_4():
           mymodule2.year - mymodule1.myage)
     print("My name is ", __name__)
 
-test(1 == 1)
