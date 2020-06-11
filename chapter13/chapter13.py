@@ -31,6 +31,16 @@ def func13_3(document):
     doc.close()
     newdoc = open('newdoc.txt', 'w')
     for i in range(len(lines)):
-        newdoc.write('{0: < 4} {1}'.format(i + 1, lines[i]))
+        newdoc.write('{0: < 5} {1}'.format(i + 1, lines[i]))
 
 func13_3('chapter13text.txt')
+
+def func13_4(document):
+    doc = open(document, 'r')
+    lines = doc.readlines()
+    doc.close()
+    newdoc = open('newdoc.txt', 'w')
+    for line in lines:
+        newdoc.write(line[6:])
+
+func13_3('newdoc.txt')
