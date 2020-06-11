@@ -5,7 +5,11 @@ def func13_1(document):
     print(lines)
     newdoc = open('newdoc.txt', 'w')
     for i in range(len(lines) - 1, -1, -1):
-        newdoc.write(lines[i] + '\n')
+        if i == len(lines) - 1:
+            newdoc.write(lines[i] + '\n')
+        else:
+            newdoc.write(lines[i])
+    newdoc.close()
 
 
 func13_1('chapter13text.txt')
