@@ -1,5 +1,5 @@
 def func13_1(document):
-    doc = open(document, 'r+')
+    doc = open(document, 'r')
     lines = doc.readlines()
     doc.close()
     print(lines)
@@ -10,6 +10,12 @@ def func13_1(document):
         else:
             newdoc.write(lines[i])
     newdoc.close()
+
+def func13_2(document):
+    doc = open(document, 'r')
+    lines = doc.readlines()
+    doc.close()
+    newdoc = open('newdoca.txt', 'w')
 
 
 func13_1('chapter13text.txt')
