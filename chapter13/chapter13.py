@@ -11,11 +11,18 @@ def func13_1(document):
             newdoc.write(lines[i])
     newdoc.close()
 
+
 def func13_2(document):
     doc = open(document, 'r')
     lines = doc.readlines()
     doc.close()
-    newdoc = open('newdoca.txt', 'w')
+    newdoc = open('newdoc.txt', 'w')
+    for line in lines:
+        if 'snake' in line:
+            if '\n' not in line:
+                newdoc.write(line + '\n')
+            else:
+                newdoc.write(line)
 
 
-func13_1('chapter13text.txt')
+func13_2('chapter13text.txt')
