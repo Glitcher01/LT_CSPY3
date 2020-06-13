@@ -85,17 +85,50 @@ def queens_puzzle(board_size=8, solutions=10):
         ba = rng.sample(bd, len(bd))
         tries += 1
         if not has_clashes(ba) and ba not in found:
-            print("Found solution {0} in {1} tries.".format(bd, tries))
+            print("Found solution {0} in {1} tries.".format(ba, tries))
             tries = 0
             found.append(ba)
 
 
 def mirror_y(list):
-    list.reverse()
-    return list
+    result = []
+    for i in range(len(list) - 1, -1, -1):
+        result.append(list[i])
+    return result
 
 
-def mirror_x(list, board_size=8):
-    for i in list:
-        i = abs(i + 1 - board_size)
-    return list
+def mirror_x(list):
+    result = []
+    for i in range(len(list)):
+        result.append(abs(list[i] + 1 - len(list)))
+    return result
+
+
+def turn90(list):
+    result = [None] * len(list)
+    for (i, v) in enumerate(list):
+        result[abs(v + 1 - len(list))] = i
+    return result
+
+
+def turn180(list):
+    result = [None] * len(list)
+    for (i, v) in enumerate(list):
+        result[abs(i + 1 - len(list))] = abs(v + 1 - len(list))
+    return result
+
+
+def turn270(list):
+    result = [None] * len(list)
+    for (i, v) in enumerate(list):
+        result[v] = abs(i + 1 - len(list))
+    return result
+
+
+def family(list):
+    return [list, turn270(list),
+            turn180(list), turn90(list),
+            mirror_y(list), mirror_y(turn90(list)),
+            mirror_x(list), mirror_x(turn90(list))]
+
+print(family([0,4,7,5,2,6,1,3]))
