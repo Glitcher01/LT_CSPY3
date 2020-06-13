@@ -1,3 +1,6 @@
+import random
+
+
 def merge(xs, ys, mode=0):
     if mode == 0:
         result = []
@@ -63,7 +66,7 @@ def col_clashes(bs, c):
     for i in range(c):
         if share_diagonal(i, bs[i], c, bs[c]):
             return True
-        return False
+    return False
 
 
 def has_clashes(board):
@@ -74,18 +77,16 @@ def has_clashes(board):
 
 
 def queens_puzzle(board_size=8, solutions=10):
-    import random
     rng = random.Random()
     bd = list(range(board_size))
     found = []
     tries = 0
     while len(found) < solutions:
-        rng.shuffle(bd)
+        ba = rng.sample(bd, len(bd))
         tries += 1
-        if not has_clashes(bd) and bd not in found:
+        if not has_clashes(ba) and ba not in found:
             print("Found solution {0} in {1} tries.".format(bd, tries))
             tries = 0
-            found.append(bd)
-            print(found)
+            found.append(ba)
 
-queens_puzzle()
+queens_puzzle(8, 6)
