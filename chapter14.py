@@ -75,21 +75,6 @@ def has_clashes(board):
             return True
     return False
 
-
-def queens_puzzle(board_size=8, solutions=10):
-    rng = random.Random()
-    bd = list(range(board_size))
-    found = []
-    tries = 0
-    while len(found) < solutions:
-        ba = rng.sample(bd, len(bd))
-        tries += 1
-        if not has_clashes(ba) and ba not in found:
-            print("Found solution {0} in {1} tries.".format(ba, tries))
-            tries = 0
-            found.append(ba)
-
-
 def mirror_y(list):
     result = []
     for i in range(len(list) - 1, -1, -1):
@@ -131,4 +116,18 @@ def family(list):
             mirror_y(list), mirror_y(turn90(list)),
             mirror_x(list), mirror_x(turn90(list))]
 
-print(family([0,4,7,5,2,6,1,3]))
+
+def queens_puzzle(board_size=8, solutions=10):
+    rng = random.Random()
+    bd = list(range(board_size))
+    found = []
+    tries = 0
+    while len(found) < solutions:
+        ba = rng.sample(bd, len(bd))
+        tries += 1
+        if not has_clashes(ba) and ba not in found:
+            print("Found solution {0} in {1} tries.".format(ba, tries))
+            tries = 0
+            found.append(ba)
+
+
