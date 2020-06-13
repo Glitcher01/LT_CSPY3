@@ -75,6 +75,7 @@ def has_clashes(board):
             return True
     return False
 
+
 def mirror_y(list):
     result = []
     for i in range(len(list) - 1, -1, -1):
@@ -121,13 +122,58 @@ def queens_puzzle(board_size=8, solutions=10):
     rng = random.Random()
     bd = list(range(board_size))
     found = []
+    dup = []
     tries = 0
     while len(found) < solutions:
         ba = rng.sample(bd, len(bd))
         tries += 1
-        if not has_clashes(ba) and ba not in found:
+        if not has_clashes(ba) and ba not in found and ba not in dup:
             print("Found solution {0} in {1} tries.".format(ba, tries))
             tries = 0
             found.append(ba)
+            dup += family(ba)
 
 
+def sieve(list):
+    result = [x for x in list if x >= 2 and type(x) == int]
+    i = 2
+    while i * i <= max(result):
+        if result[i] == 0:
+            i += 1
+            continue
+
+        j = 2 * i
+        while j < max(result):
+            result[:] = [y for y in result if y != j]
+            j += i
+
+        i += 1
+    return result
+
+
+def lotto_draw():
+    return random.sample(sieve(list(range(50))), 6)
+
+
+def lotto_match(jackpot, draw):
+    return len([i for i in draw if i in jackpot])
+
+
+def lotto_matches(jackpot, draws):
+    result = []
+    for draw in draws:
+        result.append(lotto_match(jackpot, draw))
+    return result
+
+
+def primes_in(list):
+    return len(sieve(list))
+
+
+def prime_misses(draws):
+    prime_in = []
+    for i in draws:
+        prime_in += i
+    prime_in.sort()
+    prime_ins = rem_adj_dup(prime_in)
+    return [x for x in sieve(list(range(50))) if x not in prime_ins]
