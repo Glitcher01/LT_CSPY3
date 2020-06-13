@@ -1,4 +1,4 @@
-def func14_1(xs, ys, mode = 0):
+def merge(xs, ys, mode=0):
     if mode == 0:
         result = []
         xi = yi = 0
@@ -65,4 +65,27 @@ def col_clashes(bs, c):
             return True
         return False
 
-print(col_clashes([0, 1], 1))
+
+def has_clashes(board):
+    for col in range(1, len(board)):
+        if col_clashes(board, col):
+            return True
+    return False
+
+
+def queens_puzzle(board_size=8, solutions=10):
+    import random
+    rng = random.Random()
+    bd = list(range(board_size))
+    found = []
+    tries = 0
+    while len(found) < solutions:
+        rng.shuffle(bd)
+        tries += 1
+        if not has_clashes(bd) and bd not in found:
+            print("Found solution {0} in {1} tries.".format(bd, tries))
+            tries = 0
+            found.append(bd)
+            print(found)
+
+queens_puzzle()
