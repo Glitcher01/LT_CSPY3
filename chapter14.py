@@ -89,4 +89,13 @@ def queens_puzzle(board_size=8, solutions=10):
             tries = 0
             found.append(ba)
 
-queens_puzzle(8, 6)
+
+def mirror_y(list):
+    list.reverse()
+    return list
+
+
+def mirror_x(list, board_size=8):
+    for i in list:
+        i = abs(i + 1 - board_size)
+    return list
