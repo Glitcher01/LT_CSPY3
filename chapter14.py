@@ -263,6 +263,10 @@ bigger_vocab = load_words_from_file("vocab.txt")
 
 
 def test_suite():
-    ''''''
+    t0 = time.time()
+    search_binary(bigger_vocab, 'magic')
+    t1 = time.time()
+    print('It took {0:.4f} seconds'.format(t1 - t0))
+
 test_suite()
 
