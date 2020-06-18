@@ -16,8 +16,8 @@ def search_binary(xs, target):
     lb = 0
     ub = len(xs)
     while True:
-        if lb == ub:   # If region of interest (ROI) becomes empty
-           return -1
+        if lb == ub:  # If region of interest (ROI) becomes empty
+            return -1
 
         # Next probe should be in the middle of the ROI
         mid_index = (lb + ub) // 2
@@ -25,22 +25,22 @@ def search_binary(xs, target):
         # Fetch the item at that position
         item_at_mid = xs[mid_index]
 
-        print("ROI[{0}:{1}](size={2}), probed='{3}', target='{4}'".format(lb, ub, ub-lb, item_at_mid, target))
+        print("ROI[{0}:{1}](size={2}), probed='{3}', target='{4}'".format(lb, ub, ub - lb, item_at_mid, target))
 
         # How does the probed item compare to the target?
         if item_at_mid == target:
-                return mid_index      # Found it!
+            return mid_index  # Found it!
         elif item_at_mid < target:
-            lb = mid_index + 1    # Use upper half of ROI next time
+            lb = mid_index + 1  # Use upper half of ROI next time
         else:
-            ub = mid_index        # Use lower half of ROI next time
+            ub = mid_index  # Use lower half of ROI next time
 
 
 def find_unknown_words(vocab, wds):
     """ Return a list of words in wds that do not occur in vocab """
     result = []
     for w in wds:
-        if (search_linear(vocab, w) < 0):
+        if search_linear(vocab, w) < 0:
             result.append(w)
     return result
 
@@ -60,10 +60,10 @@ def text_to_words(the_text):
     """
 
     my_substitutions = the_text.maketrans(
-      # If you find any of these
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&()*+,-./:;<=>?@[]^_`{|}~'\\",
-      # Replace them by these
-      "abcdefghijklmnopqrstuvwxyz                                          ")
+        # If you find any of these
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&()*+,-./:;<=>?@[]^_`{|}~'\\",
+        # Replace them by these
+        "abcdefghijklmnopqrstuvwxyz                                          ")
 
     # Translate the text now.
     cleaned_text = the_text.translate(my_substitutions)
@@ -81,13 +81,16 @@ def get_words_in_book(filename):
 
 
 def merge(xs, ys, mode=0):
-    if mode == 0:
-        result = []
-        xi = yi = 0
-        xs.sort()
-        ys.sort()
+    result = []
+    xi = yi = 0
+    xs.sort()
+    ys.sort()
+    if mode != 5:
         xs, ys = rem_adj_dup(xs), rem_adj_dup(ys)
-        while True:
+    if mode == 5:
+        result = xs
+    while True:
+        if mode == 0:
             if xi >= len(xs):
                 result.extend(ys[yi:])
                 return result
@@ -107,22 +110,92 @@ def merge(xs, ys, mode=0):
             else:
                 result.append(xs[xi])
                 xi, yi = xi + 1, yi + 1
-    if mode == 1:
-        result = []
-        for i in xs:
-            if i not in ys:
-                result.append(i)
-        return result
-    if mode == 2:
-        result = []
-        for i in ys:
-            if i not in xs:
-                result.append(i)
-        return result
-    if mode == 3:
-        result = xs + ys
-        result.sort()
-        return rem_adj_dup(result)
+        if mode == 1:
+            if xi >= len(xs):
+                return result
+
+            if yi >= len(ys):
+                return result
+
+            if xs[xi] < ys[yi]:
+                result.append(xs[xi])
+                xi += 1
+
+            elif ys[yi] < xs[xi]:
+                yi += 1
+
+            else:
+                result.append(xs[xi])
+                xi, yi = xi + 1, yi + 1
+        if mode == 2:
+            if xi >= len(xs):
+                return result
+
+            if yi >= len(ys):
+                result.extend(xs[xi:])
+                return result
+
+            if xs[xi] < ys[yi]:
+                result.append(xs[xi])
+                xi += 1
+
+            elif ys[yi] < xs[xi]:
+                yi += 1
+
+            else:
+                xi, yi = xi + 1, yi + 1
+        if mode == 3:
+            if xi >= len(xs):
+                result.extend(ys[yi:])
+                return result
+
+            if yi >= len(ys):
+                return result
+
+            if xs[xi] < ys[yi]:
+                xi += 1
+
+            elif ys[yi] < xs[xi]:
+                result.append(ys[yi])
+                yi += 1
+
+            else:
+                xi, yi = xi + 1, yi + 1
+        if mode == 4:
+            if xi >= len(xs):
+                result.extend(ys[yi:])
+                return result
+
+            if yi >= len(ys):
+                result.extend(xs[xi:])
+                return result
+
+            if xs[xi] < ys[yi]:
+                result.append(xs[xi])
+                xi += 1
+
+            elif ys[yi] < xs[xi]:
+                result.append(ys[yi])
+                yi += 1
+
+            else:
+                xi, yi = xi + 1, yi + 1
+        if mode == 5:
+            if xi >= len(xs):
+                return result
+
+            if yi >= len(ys):
+                return result
+
+            if xs[xi] < ys[yi]:
+                xi += 1
+
+            elif ys[yi] < xs[xi]:
+                yi += 1
+
+            else:
+                result.remove(xs[xi])
+                xi, yi = xi + 1, yi + 1
 
 
 def rem_adj_dup(list):
@@ -268,5 +341,5 @@ def test_suite():
     t1 = time.time()
     print('It took {0:.4f} seconds'.format(t1 - t0))
 
-test_suite()
 
+test_suite()
