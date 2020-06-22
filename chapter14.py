@@ -192,7 +192,7 @@ def merge(xs, ys, mode=0):
 
             else:
                 result.remove(xs[xi])
-                xi, yi = xi + 1, yi + 1
+                yi = yi + 1
 
 
 def rem_adj_dup(list):
