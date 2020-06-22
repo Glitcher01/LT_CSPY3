@@ -85,8 +85,6 @@ def merge(xs, ys, mode=0):
     xi = yi = 0
     xs.sort()
     ys.sort()
-    if mode != 5:
-        xs, ys = rem_adj_dup(xs), rem_adj_dup(ys)
     if mode == 5:
         result = xs
     while True:
