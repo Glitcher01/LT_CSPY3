@@ -226,9 +226,8 @@ def has_clashes(board):
 
 
 def mirror_y(list):
-    result = []
-    for i in range(len(list) - 1, -1, -1):
-        result.append(list[i])
+    result = list
+    result.reverse()
     return result
 
 
@@ -334,5 +333,4 @@ bigger_vocab = load_words_from_file("vocab.txt")
 
 def test_suite():
     ''''''
-
 test_suite()
