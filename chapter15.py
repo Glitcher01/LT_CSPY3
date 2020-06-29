@@ -1,3 +1,5 @@
+from unit_tester import test
+
 class Point:
     def __init__(self, x=0, y=0):
         self.x = x
@@ -32,6 +34,9 @@ class Point:
     def get_line_to(self, pt):
         slope = (self.y - pt.y) / (self.x - pt.x)
         return (slope, self.y - self.x * slope)
+
+    def same_coordinates(p1, p2):
+        return (p1.x == p2.x) and (p1.y == p2.y)
 
 
 class SMS_store:
