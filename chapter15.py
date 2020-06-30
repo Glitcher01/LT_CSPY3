@@ -80,10 +80,11 @@ def circumcircle(a):
         x += (a[i].x ** 2 + a[i].y ** 2) * (a[(i + 1) % 3].y - a[(i + 2) % 3].y) / d
         y += (a[i].x ** 2 + a[i].y ** 2) * (a[(i + 2) % 3].x - a[(i + 1) % 3].x) / d
         sides.append(dist(a[i], a[(i + 1) % 3]))
+        print(sides)
 
-    p = sum(sides)
-    area = (p / 2 * (p / 2 - sides[0]) * (p / 2 - sides[1]) * (p / 2 - sides[2])) ** 0.5
-    r = sides[0] * sides[1] * sides[2] / (4 * area)
+    p = sum(sides) / 2
+    area = round((p * (p - sides[0]) * (p - sides[1]) * (p - sides[2])) ** 0.5, 10)
+    r = round((sides[0] * sides[1] * sides[2]) / (4 * area), 10)
     point = Point(x, y)
     if (dist(a[3], point) == r):
         return point
