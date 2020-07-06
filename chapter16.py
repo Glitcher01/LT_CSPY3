@@ -1,6 +1,7 @@
 from unit_tester import test
 from chapter15 import Point
 
+
 class Rectangle:
     """ A class to manufacture rectangle objects """
 
@@ -11,7 +12,7 @@ class Rectangle:
         self.height = h
 
     def __str__(self):
-        return  "({0}, {1}, {2})".format(self.corner, self.width, self.height)
+        return "({0}, {1}, {2})".format(self.corner, self.width, self.height)
 
     def grow(self, delta_width, delta_height):
         """ Grow (or shrink) this object by the deltas """
@@ -35,12 +36,8 @@ class Rectangle:
                 return True
         return False
 
-
-rect = Rectangle(Point(), 10, 5)
-test(rect.contains(Point(0, 0)) == True)
-test(rect.contains(Point(3, 3)) == True)
-test(rect.contains(Point(3, 7)) == False)
-test(rect.contains(Point(3, 5)) == False)
-test(rect.contains(Point(3, 4.99999)) == True)
-test(rect.contains(Point(-3, -3)) == False)
-
+    def collision(self, rect):
+        if rect.corner.x + rect.width > self.corner.x > rect.corner.x - self.width:
+            if rect.corner.y + rect.height > self.corner.y > rect.corner.y - self.height:
+                return True
+        return False
