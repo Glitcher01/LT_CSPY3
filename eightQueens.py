@@ -2,6 +2,7 @@ import pygame
 
 gravity = 0.0001
 
+
 class QueenSprite:
 
     def __init__(self, img, target_posn):
@@ -17,7 +18,7 @@ class QueenSprite:
     def update(self):
         self.y_velocity += gravity
         (x, y) = self.posn
-        new_y_pos = y + self.y_velocity
+        new_y_pos = y + self.y_velocity * 3000 / 36
         (target_x, target_y) = self.target_posn  # Unpack the position
         dist_to_go = target_y - new_y_pos  # How far to our floor?
 
@@ -29,6 +30,50 @@ class QueenSprite:
 
     def draw(self, target_surface):
         target_surface.blit(self.image, self.posn)
+
+    def contains_point(self, pt):
+        """ Return True if my sprite rectangle contains point pt """
+        (my_x, my_y) = self.posn
+        my_width = self.image.get_width()
+        my_height = self.image.get_height()
+        (x, y) = pt
+        return (my_x <= x < my_x + my_width and
+                my_y <= y < my_y + my_height)
+
+    def handle_click(self):
+        self.y_velocity += -0.2
+
+
+class DukeSprite:
+
+    def __init__(self, img, target_posn):
+        self.image = img
+        self.posn = target_posn
+        self.anim_frame_count = 0
+        self.curr_patch_num = 0
+
+    def update(self):
+        if self.anim_frame_count > 0:
+            self.anim_frame_count = (self.anim_frame_count + 1) % 60
+            self.curr_patch_num = self.anim_frame_count // 6
+
+    def draw(self, target_surface):
+        patch_rect = (self.curr_patch_num * 50, 0,
+                      50, self.image.get_height())
+        target_surface.blit(self.image, self.posn, patch_rect)
+
+    def contains_point(self, pt):
+        """ Return True if my sprite rectangle contains  pt """
+        (my_x, my_y) = self.posn
+        my_width = self.image.get_width() / 10
+        my_height = self.image.get_height()
+        (x, y) = pt
+        return (my_x <= x < my_x + my_width and
+                my_y <= y < my_y + my_height)
+
+    def handle_click(self):
+        if self.anim_frame_count == 0:
+            self.anim_frame_count = 5
 
 
 def draw_board(the_board):
@@ -48,6 +93,14 @@ def draw_board(the_board):
     ball = pygame.image.load("ball.png")
     ball = pygame.transform.scale(ball, (int(sq_sz * 4 / 5), int(sq_sz * 4 / 5)))
 
+    # Load the sprite sheet
+    duke_sprite_sheet = pygame.image.load("duke_spritesheet.png")
+    duke_offset_x = (sq_sz - 44) // 2
+    duke_offset_y = (sq_sz + 26) // 2
+    # Instantiate two duke instances, put them on the chessboard
+    duke1 = DukeSprite(duke_sprite_sheet, (sq_sz * 2 + duke_offset_x, duke_offset_y))
+    duke2 = DukeSprite(duke_sprite_sheet, (sq_sz * 5 + duke_offset_x, sq_sz + duke_offset_y))
+
     # Use an extra offset to centre the ball in its square.
     # If the square is too small, offset becomes negative,
     #   but it will still be centered :-)
@@ -56,14 +109,35 @@ def draw_board(the_board):
     for (col, row) in enumerate(the_board):
         a_queen = QueenSprite(ball, (col * sq_sz + ball_offset, row * sq_sz + ball_offset))
         all_sprites.append(a_queen)
+
+    # Add them to the list of sprites which our game loop manages
+    all_sprites.append(duke1)
+    all_sprites.append(duke2)
+    my_clock = pygame.time.Clock()
     while True:
 
         # Look for an event from keyboard, mouse, etc.
         ev = pygame.event.poll()
         if ev.type == pygame.QUIT:
             break
-        if ev.type != 0:
-            print(ev)
+
+        if ev.type == pygame.KEYDOWN:
+            key = ev.dict['key']
+            if key == 27:  # On Escape key ...
+                break  # leave the game loop.
+            if key == ord('r'):
+                colors[0] = (255, 0, 0)  # Change to red + black.
+            elif key == ord('g'):
+                colors[0] = (0, 255, 0)  # Change to green + black.
+            elif key == ord('b'):
+                colors[0] = (0, 0, 255)  # Change to blue + black.
+
+        if ev.type == pygame.MOUSEBUTTONDOWN:  # Mouse gone down?
+            pos_of_click = ev.dict['pos']  # Get the coordinates.
+            for sprite in all_sprites:
+                if sprite.contains_point(pos_of_click):
+                    sprite.handle_click()
+                    break
 
         # Draw a fresh background (a blank chess board)
         for row in range(n):  # Draw each row of the board.
@@ -79,9 +153,10 @@ def draw_board(the_board):
             sprite.update()
             sprite.draw(surface)
 
-        pygame.display.flip()
+        my_clock.tick(60)  # Waste time so that frame rate becomes 60 fps
+        pygame.display.flip()  # Display it
 
     pygame.quit()
 
 
-draw_board(list(range(9)))
+draw_board(list(range(13)))
