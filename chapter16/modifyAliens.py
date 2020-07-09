@@ -143,8 +143,6 @@ class Explosion(pygame.sprite.Sprite):
 
 class Shot(pygame.sprite.Sprite):
     speed = -11
-    chance_to_fail = 0.1
-    falling_height = 200
     images = []
 
     def __init__(self, pos):
