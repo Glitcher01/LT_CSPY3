@@ -146,4 +146,3 @@ def print_only_files(path):
             list_of_files.append([fullname])
     return sum(list_of_files, [])
 
-print(print_only_files(r'C:\Users\tvnra\PycharmProjects'))
