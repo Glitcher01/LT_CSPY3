@@ -1,4 +1,5 @@
 import turtle
+import os
 
 tess = turtle.Turtle()
 tess.pu()
@@ -123,4 +124,26 @@ def not_fib(n):
     return a
 
 
-print(not_fib(200))
+def get_dirlist(path):
+    """
+      Return a sorted list of all entries in path.
+      This returns just the names, not the full path to the names.
+    """
+    dirlist = os.listdir(path)
+    dirlist.sort()
+    return dirlist
+
+
+def print_only_files(path):
+    list_of_files = []
+    dirlist = get_dirlist(path)
+    for f in dirlist:
+        fullname = os.path.join(path, f)
+        if os.path.isdir(fullname):
+            list_of_files.append(print_only_files(fullname))
+        else:
+            fullname.replace('\\', '/')
+            list_of_files.append([fullname])
+    return sum(list_of_files, [])
+
+print(print_only_files(r'C:\Users\tvnra\PycharmProjects'))
