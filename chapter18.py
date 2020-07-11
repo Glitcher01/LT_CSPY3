@@ -145,3 +145,22 @@ def print_only_files(path):
             list_of_files.append([fullname])
     return sum(list_of_files, [])
 
+
+def litter(path):
+    dirlist = get_dirlist(path)
+    if not os.path.exists(path):
+        os.makedirs(path)
+    for f in dirlist:
+        fullname = os.path.join(path, f)
+        if os.path.isdir(fullname):
+            os.open(os.path.join(fullname, 'trash.txt'), os.O_CREAT)
+
+
+def cleanup(path):
+    dirlist = get_dirlist(path)
+    for f in dirlist:
+        fullname = os.path.join(path, f)
+        if os.path.exists(os.path.join(fullname, 'trash.txt')):
+            os.remove(os.path.join(fullname, 'trash.txt'))
+        if os.path.isdir(fullname):
+            cleanup(fullname)
