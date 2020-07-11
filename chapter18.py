@@ -142,7 +142,6 @@ def print_only_files(path):
         if os.path.isdir(fullname):
             list_of_files.append(print_only_files(fullname))
         else:
-            fullname.replace('\\', '/')
             list_of_files.append([fullname])
     return sum(list_of_files, [])
 
