@@ -153,7 +153,8 @@ def litter(path):
     for f in dirlist:
         fullname = os.path.join(path, f)
         if os.path.isdir(fullname):
-            os.open(os.path.join(fullname, 'trash.txt'), os.O_CREAT)
+            open(os.path.join(fullname, 'trash.txt'), 'a')
+            litter(fullname)
 
 
 def cleanup(path):
