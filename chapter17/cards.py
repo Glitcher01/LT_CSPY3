@@ -19,7 +19,6 @@ def draw_random_hand():
     list = random.sample(range(0, 52), 5)
     cards = []
     for i in list:
-        print(i)
         cards.append(Card(deck, (80 * list.index(i) + 30, 222), i))
     while True:
         ev = pygame.event.poll()
