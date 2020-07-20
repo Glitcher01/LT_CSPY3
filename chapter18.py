@@ -1,12 +1,13 @@
 import turtle
 import os
+import math
 
 tess = turtle.Turtle()
 tess.pu()
 tess.setx(-200)
 tess.sety(130)
 tess.pd()
-tess.speed(1000)
+tess.speed(0)
 
 
 def koch(t, order, size):
@@ -23,10 +24,10 @@ def koch(t, order, size):
             t.left(angle)
 
 
-def koch_snowflake(t, order, size):
-    for i in range(3):
+def koch_snowflake(t, order, size, sides):
+    for i in range(sides):
         koch(t, order, size)
-        t.right(120)
+        t.right(360 / sides)
 
 
 def cesaro(t, order, size):
@@ -34,14 +35,26 @@ def cesaro(t, order, size):
         t.forward(size)
     else:
         for angle in [-85, 170, -85, 0]:
-            cesaro(t, order - 1, size)
+            cesaro(t, order - 1, size/2)
             t.left(angle)
 
+def cesaro_len(order, size):
+    if order == 0:
+        return size
+    if order == 1:
+        return size + size * math.sin(5 * math.pi / 180)
+    return cesaro_len(order - 1, size / 2) * 2 + cesaro_len(order - 1, size / 2) * math.sin(5 * math.pi / 180) * 2
 
 def cesaro_square(t, order, size):
-    for i in range(4):
-        cesaro(t, order, size)
-        t.right(90)
+    if order == 0:
+        for i in range(4):
+            cesaro(t, order, size)
+            t.right(90)
+    else:
+        ratio = cesaro_len(order - 1, size) / cesaro_len(order, size)
+        for i in range(4):
+            cesaro(t, order, size * ratio)
+            t.right(90)
 
 
 def sierpinski(t, order, size, colorChangeDepth=-1, color='black'):
@@ -165,3 +178,5 @@ def cleanup(path):
             os.remove(os.path.join(fullname, 'trash.txt'))
         if os.path.isdir(fullname):
             cleanup(fullname)
+
+turtle.mainloop()
