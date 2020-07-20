@@ -51,7 +51,7 @@ def cesaro_square(t, order, size):
             cesaro(t, order, size)
             t.right(90)
     else:
-        ratio = cesaro_len(order - 1, size) / cesaro_len(order, size)
+        ratio = cesaro_len(0, size) / cesaro_len(order, size)
         for i in range(4):
             cesaro(t, order, size * ratio)
             t.right(90)
