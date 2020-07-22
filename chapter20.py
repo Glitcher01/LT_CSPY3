@@ -50,9 +50,6 @@ def get_words_in_book(filename):
 
 
 def alice_words():
-    data_file = open('alice_words.txt', 'w')
-    data_file.write('{0}{1:>18}\n'.format('Word', 'Count'))
-    data_file.write('======================\n')
     data = {}
     words = get_words_in_book('AliceInWonderland.txt')
     counter = 0
