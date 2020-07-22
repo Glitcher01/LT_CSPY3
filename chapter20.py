@@ -30,9 +30,9 @@ def text_to_words(the_text):
 
     my_substitutions = the_text.maketrans(
         # If you find any of these
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&()*+,-./:;<=>?@[]^_`{|}~'\\",
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&()*+,./:;<=>?@[]^_`{|}~'\\",
         # Replace them by these
-        "abcdefghijklmnopqrstuvwxyz                                          ")
+        "abcdefghijklmnopqrstuvwxyz                                         ")
 
     # Translate the text now.
     cleaned_text = the_text.translate(my_substitutions)
@@ -52,7 +52,9 @@ def get_words_in_book(filename):
 def alice_words():
     data = {}
     words = get_words_in_book('AliceInWonderland.txt')
-    counter = 0
+    for i in range(len(words)):
+        if '--' in words[i]:
+            words[i] = words[i].replace('--', '')
     for i in words:
         if i not in data:
             data[i] = 1
@@ -61,6 +63,10 @@ def alice_words():
     data_file = open('alice_words.txt', 'w')
     data_file.write('{0}{1:>18}\n'.format('Word', 'Count'))
     data_file.write('======================\n')
+    for i in 'bcdefghjklmnopqrstuvwxyz':
+        if i in data:
+            del data[i]
+    del data['']
     data = list(data.items())
     data.sort()
     for (word, count) in data:
