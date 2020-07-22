@@ -55,7 +55,6 @@ def alice_words():
     data_file.write('======================\n')
     data = {}
     words = get_words_in_book('AliceInWonderland.txt')
-    words.remove('s')
     counter = 0
     for i in words:
         if i not in data:

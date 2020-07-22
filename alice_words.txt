@@ -1843,7 +1843,7 @@ rush             2
 rushed           1
 rustled          1
 rustling         1
-s                200
+s                201
 sad              3
 sadly            5
 safe             2
