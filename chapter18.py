@@ -35,8 +35,9 @@ def cesaro(t, order, size):
         t.forward(size)
     else:
         for angle in [-85, 170, -85, 0]:
-            cesaro(t, order - 1, size/2)
+            cesaro(t, order - 1, size / 2)
             t.left(angle)
+
 
 def cesaro_len(order, size):
     if order == 0:
@@ -44,6 +45,7 @@ def cesaro_len(order, size):
     if order == 1:
         return size + size * math.sin(5 * math.pi / 180)
     return cesaro_len(order - 1, size / 2) * 2 + cesaro_len(order - 1, size / 2) * math.sin(5 * math.pi / 180) * 2
+
 
 def cesaro_square(t, order, size):
     if order == 0:
@@ -65,41 +67,18 @@ def sierpinski(t, order, size, colorChangeDepth=-1, color='black'):
             t.lt(120)
     else:
         if colorChangeDepth == 0:
-            sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, 'red')
-            t.pu()
-            t.fd(size / 2)
-            t.pd()
-            sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, 'blue')
-            t.pu()
-            t.bk(size / 2)
-            t.lt(60)
-            t.fd(size / 2)
-            t.rt(60)
-            t.pd()
-            sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, 'magenta')
-            t.pu()
-            t.lt(60)
-            t.bk(size / 2)
-            t.rt(60)
-            t.pd()
+            for i in [(size / 2, 0, 'red'), (-size / 4, size / 4 * math.sqrt(3), 'blue'),
+                      (-size / 4, -size / 4 * math.sqrt(3), 'magenta')]:
+                sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, i[2])
+                t.pu()
+                t.setpos(t.xcor() + i[0], t.ycor() + i[1])
+                t.pd()
         else:
-            sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, color)
-            t.pu()
-            t.fd(size / 2)
-            t.pd()
-            sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, color)
-            t.pu()
-            t.bk(size / 2)
-            t.lt(60)
-            t.fd(size / 2)
-            t.rt(60)
-            t.pd()
-            sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, color)
-            t.pu()
-            t.lt(60)
-            t.bk(size / 2)
-            t.rt(60)
-            t.pd()
+            for i in [(size / 2, 0), (-size / 4, size / 4 * math.sqrt(3)), (-size / 4, -size / 4 * math.sqrt(3))]:
+                sierpinski(t, order - 1, size / 2, colorChangeDepth - 1, color)
+                t.pu()
+                t.setpos(t.xcor() + i[0], t.ycor() + i[1])
+                t.pd()
 
 
 def recursive_min(ls):
@@ -178,5 +157,6 @@ def cleanup(path):
             os.remove(os.path.join(fullname, 'trash.txt'))
         if os.path.isdir(fullname):
             cleanup(fullname)
+
 
 turtle.mainloop()
