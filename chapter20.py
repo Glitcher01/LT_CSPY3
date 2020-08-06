@@ -17,10 +17,7 @@ def c20_1(string):
 
 
 def add_fruit(inventory, fruit, quantity=0):
-    if fruit not in inventory:
-        inventory[fruit] = quantity
-    else:
-        inventory[fruit] += quantity
+    inventory[fruit] = inventory.get(fruit, 0) + quantity
 
 
 def text_to_words(the_text):
