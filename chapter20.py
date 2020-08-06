@@ -65,5 +65,10 @@ def alice_words():
     data.sort()
     for (word, count) in data:
         data_file.write('{0:<17}{1}\n'.format(word, count))
+    data_words = []
+    for i in data:
+        data_words.append(i[0])
+    data_words.sort(key=len, reverse=True)
+
 
 alice_words()
