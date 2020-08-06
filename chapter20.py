@@ -56,10 +56,7 @@ def alice_words():
         if '--' in words[i]:
             words[i] = words[i].replace('--', '')
     for i in words:
-        if i not in data:
-            data[i] = 1
-        else:
-            data[i] += 1
+        data[i] = data.get(i, 0) + 1
     data_file = open('alice_words.txt', 'w')
     data_file.write('{0}{1:>18}\n'.format('Word', 'Count'))
     data_file.write('======================\n')
