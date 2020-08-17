@@ -1,6 +1,7 @@
 import turtle
 import random
 
+
 class TurtleGTX(turtle.Turtle):
     def __init__(self, *args, **kwargs):
         super(TurtleGTX, self).__init__(*args, **kwargs)

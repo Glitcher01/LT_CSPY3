@@ -83,7 +83,7 @@ class Deck:
             hand.add(card)  # Add the card to the hand
 
 
-class Hand:
+class Hand(Deck):
     def __init__(self, name=''):
         self.cards = []
         self.name = name
@@ -93,7 +93,7 @@ class Hand:
 
     def __str__(self):
         s = "Hand " + self.name
-        if Deck.is_empty(self):
+        if self.is_empty():
             s += " is empty\n"
         else:
             s += " contains\n"
@@ -166,14 +166,14 @@ class OldMaidGame(CardGame):
         self.hands[i].add(picked_card)
         print("Hand", self.hands[i].name, "picked", picked_card)
         count = self.hands[i].remove_matches()
-        Deck.shuffle(self.hands[i])
+        self.hands[i].shuffle()
         return count
 
     def find_neighbor(self, i):
         num_hands = len(self.hands)
         for next in range(1, num_hands):
             neighbor = (i + next) % num_hands
-            if not Deck.is_empty(self.hands[neighbor]):
+            if not self.hands[neighbor].is_empty():
                 return neighbor
 
     def print_hands(self):
