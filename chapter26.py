@@ -104,7 +104,47 @@ class ListQueue:
         return str(self.queue)
 
 
-t0 = time.perf_counter_ns()
-print(time.perf_counter_ns() - t0)
-t0 = time.perf_counter_ns()
-print(time.perf_counter_ns() - t0)
+class Linked_Priority:
+    def __init__(self):
+        self.head = None
+        self.length = 0
+        self.last = None
+        self.list = []
+
+    def insert(self, cargo):
+        node = Node(cargo)
+        if self.length == 0:
+            self.head = self.last = node
+            self.length += 1
+        else:
+            item = self.head
+            if cargo >= item.cargo:
+                self.head = node
+                self.head.next = item
+                self.length += 1
+                return
+            while item.next is not None:
+                if cargo >= item.next.cargo:
+                    node.next = item.next
+                    item.next = node
+                    self.length += 1
+                    return
+                item = item.next
+            self.last.next = node
+            self.last = node
+            self.length += 1
+
+    def remove(self):
+        cargo = self.head.cargo
+        self.head = self.head.next
+        self.length -= 1
+        if self.length is 0:
+            self.last = None
+        return cargo
+
+    def is_empty(self):
+        return self.length == 0
+
+pri_linked = Linked_Priority()
+pri_linked.insert(11)
+pri_linked.insert(12)
