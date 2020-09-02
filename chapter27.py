@@ -146,6 +146,9 @@ def animal(begin=Tree("bird")):
             continue
         else:
             pickle.dump(root, open('saved_tree.pickle', 'wb'))
+            break
 
-
-saved_tree = animal()
+animal()
+f = open('saved_tree.pickle', 'rb')
+example = pickle.load(f)
+print_tree_indented(example)
